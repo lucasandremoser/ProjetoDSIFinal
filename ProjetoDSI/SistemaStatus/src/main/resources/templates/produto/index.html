@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Cadastro Produto</title>
+<head th:include="layout :: htmlhead"></head>
+<body>
+	<div class="container">
+		<nav th:replace="layout :: menu">(menu)</nav>
+		<a href="produto/form.html" th:href="@{/produto/novo}"
+			class="btn btn-primary btn-lg" role="button">Novo</a>
+		<div class="border border-dark">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">ID</th>
+						<th scope="col">Produto</th>
+						<th scope="col">Valor Unitario</th>
+						<th scope="col">Quantidade</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr scope="row" th:each="umpac : ${listapac}">
+						<td th:text="${umpac.id}"></td>
+						<td th:text="${umpac.descricaoProduto}"></td>
+						<td th:text="${umpac.valorUni}"></td>
+						<td th:text="${umpac.quantidade}"></td>
+						<td><a href="form.html"
+							th:href="@{'/produto/alterar/' + ${umpac.id}}"
+							class="btn btn-secondary btn-lg" role="button">Alterar</a> <a
+							href="#" class="btn btn-warning btn-lg" role="button"
+							data-toggle="modal" data-target="#confirmaExclusao"
+							th:data-id="${umpac.id}">Excluir</a>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="modal fade" id="confirmaExclusao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirma Exclusao?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">X</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Deseja Realmente Excluir?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-warning btn-lg" id="btnConf" role="button">Sim</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	<div th:include="layout :: footer" id="footer">(footer)</div>
+	<script th:inline="javascript">
+          /*<![CDATA[*/
+               $('#confirmaExclusao').on('show.bs.modal', function (event) {
+                  var button = $(event.relatedTarget)
+                  var recipient = button.data('id')
+                  var modal = $(this)
+                  modal.find('#btnConf').attr("href","/produto/remover/" + recipient)
+                })
+           /*]]>*/
+        </script> 
+</body>
+</html>

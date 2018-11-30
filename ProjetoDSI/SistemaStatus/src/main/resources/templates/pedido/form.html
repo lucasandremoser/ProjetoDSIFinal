@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:include="layout :: htmlhead"></head>
+    <body>
+        <div class="container">
+            <nav th:replace="layout :: menu">(menu)</nav>
+            <div class="border border-dark">
+                <form th:action="@{/pedido}"  action="#" method="post">
+                    <div th:object="${pedido}">                   
+                        <input type="hidden" id="txtid" th:field="${pedido.id}" />
+                        <div class="form-group">
+                        <label for="slcdata">Mesa</label>
+	                        <div class="input-group mesa" id="mesa1" data-target-input="nearest">
+	                            <input type="text" class="form-control mesa2-input" data-target="#mesa1" 
+	                              th:field="${pedido.mesa}" />
+	                            <div class="input-group-append" data-target="#mesa1" data-toggle="mesa2">
+	                            </div>
+	                        </div>
+	                    </div>
+                        
+                        <div class="ped">
+						    <div class="ped-header">Item Pedido</div>
+						    <div class="ped-body">
+						    	<div class="container">
+						    		<div class="form-group">
+                            			<label for="slcProduto">Produto</label>
+							    		<select class="form-control" id="slcProduto"  th:field="${novopedido.produto}"  >
+			                                <option th:each="umProdutoPedido : ${listaProduto}" th:value="${umProdutoPedido.id}" th:text="${umProdutoPedido.descricaoProduto}"></option>
+			                            </select>
+						    		</div>
+						    		<div class="form-group">
+									      <label for="txtqtd">Quantidade</label>
+								          <input type="text" class="form-control" id="txtqtd"  th:field="${novopedido.quantidade}" placeholder="Qtd">
+								    </div>
+						    		<!--  <div class="form-group">
+									      <label for="txtvalor">Valor</label>
+								          <input type="text" class="form-control" id="txtvalor" th:field="${novopedido.precoUni}" placeholder="Valor">
+								    </div>-->
+								    </div>
+								    <button type="submit" name="insertPedido" class="btn btn-primary">Inserir Item no Pedido</button>
+						    	</div>
+						    </div>
+						    </div>
+                         <table class="table">
+								<thead class="thead-light"> 
+									<tr>
+										<th scope="col">Produto</th>
+										<th scope="col">Quantidade</th>
+										<th scope="col">Valor</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr scope="row" th:each="umitempedido, stat : ${pedido.pedidoProduto}">
+										<input type="hidden" th:field="${pedido.pedidoProduto[__${stat.index}__].produto}"/>
+										<input type="hidden" th:field="${pedido.pedidoProduto[__${stat.index}__].quantidade}"/>
+										<input type="hidden" th:field="${pedido.pedidoProduto[__${stat.index}__].precoUni}"/>
+										<td th:text="${umitempedido.produto.descricaoProduto}"></td>
+										<td th:text="${umitempedido.quantidade}"></td>
+										<td th:text="${umitempedido.precoUni}"></td>
+										<td>
+											<button type="submit" name="removePedido" th:value="__${stat.index}__" class="btn btn-primary">Remover</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+                        
+                    </div>
+                    <button type="submit" name="save" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+        <div th:include="layout :: footer" id="footer">(footer)</div>
+    </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:include="layout :: htmlhead"></head>
+    <body>
+        <div class="container">
+            <nav th:replace="layout :: menu">(menu)</nav>
+            <div class="border border-dark">
+                <form th:action="@{/cardapio}"  action="#" method="post">
+                    <div th:object="${cardapio}">                   
+                        <input type="hidden" id="txtid" th:field="${cardapio.id}" />
+                        <div class="form-group">
+                        <label for="slcdata">Data Final</label>
+	                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+	                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" 
+	                              th:field="${cardapio.dataFim}" />
+	                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+	                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+	                            </div>
+	                        </div>
+	                    </div>
+                        
+                        <div class="card">
+						    <div class="card-header">Item Cardápio</div>
+						    <div class="card-body">
+						    	<div class="container">
+						    		<div class="form-group">
+                            			<label for="slcProduto">Produto</label>
+							    		<select class="form-control" id="slcProduto"  th:field="${novoitem.produto}"  >
+			                                <option th:each="umProduto : ${listaProduto}" th:value="${umProduto.id}" th:text="${umProduto.descricaoProduto}"></option>
+			                            </select>
+						    		</div>
+						    		<div class="form-group">
+									      <label for="txtqtd">Quantidade</label>
+								          <input type="text" class="form-control" id="txtqtd"  th:field="${novoitem.quantidade}" placeholder="Qtd">
+								    </div>
+						    		<div class="form-group">
+									      <label for="txtvalor">Valor</label>
+								          <input type="text" class="form-control" id="txtvalor" th:field="${novoitem.precoUni}" placeholder="Valor">
+								    </div>
+								    <button type="submit" name="insertItem" class="btn btn-primary">Inserir item</button>
+						    	</div>
+						    </div>
+						    </div>
+                         <table class="table">
+								<thead class="thead-light"> 
+									<tr>
+										<th scope="col">Produto</th>
+										<th scope="col">Quantidade</th>
+										<th scope="col">Valor</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr scope="row" th:each="umitem, stat : ${listaItem}">
+										<input type="hidden" th:field="${cardapio.itens[__${stat.index}__].produto}"/>
+										<input type="hidden" th:field="${cardapio.itens[__${stat.index}__].quantidade}"/>
+										<input type="hidden" th:field="${cardapio.itens[__${stat.index}__].precoUni}"/>
+										<td th:text="${umitem.produto.descricaoProduto}"></td>
+										<td th:text="${umitem.quantidade}"></td>
+										<td th:text="${umitem.precoUni}"></td>
+										<td>
+											<button type="submit" name="removeItem" th:value="__${stat.index}__" class="btn btn-primary">Remover</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+                        
+                    </div>
+                    <button type="submit" name="save" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+        <div th:include="layout :: footer" id="footer">(footer)</div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format:"DD/MM/YYYY"                   
+                });
+            });
+        </script>
+    </body>
+</html>

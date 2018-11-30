@@ -1,0 +1,6 @@
+package com.univille.sistemastatus.model;
+
+public class ItemPedido {
+
+	private Produto produto = new Produto();
+}

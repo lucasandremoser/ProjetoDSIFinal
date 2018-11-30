@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead"></head>
+<body>
+	<div class="container">
+		<nav th:replace="layout :: menu">(menu)</nav>
+		<div class="border border-dark">
+			<form th:action="@{/produto/(form)}" th:object="${produto}"
+				action="#" method="post">
+				<input type="hidden" id="txtid" th:field="*{id}" /> 
+				
+				<div class="form-group">
+					<label for="slcProduto"></label> 
+					<input type="text" class="form-control" th:field="*{descricaoProduto}" placeholder="Nome">
+				</div>
+				<div class="form-group">
+					<label for="slcvalor"></label> 
+					<input type="text" class="form-control" th:field="*{valorUni}" placeholder="Valor">
+				</div>
+				<div class="form-group">
+					<label for="slcquantidade"></label> 
+					<input type="text" class="form-control" th:field="*{quantidade}" placeholder="Quantidade">
+				</div>
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</form>
+		</div>
+	</div>
+	<div th:include="layout :: footer" id="footer">(footer)</div>
+</body>
+</html>

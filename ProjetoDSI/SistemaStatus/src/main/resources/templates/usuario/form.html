@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead"></head>
+<body>
+	<div class="container">
+		<nav th:replace="layout :: menu">(menu)</nav>
+		<div class="border border-dark">
+			<form th:action="@{/usuario/(form)}" th:object="${usuario}"
+				action="#" method="post">
+				<input type="hidden" id="txtid" th:field="*{id}" /> 
+				
+				<div class="form-group">
+					<label for="slcusuario"></label> 
+					<input type="text" class="form-control" th:field="*{nome}" placeholder="Nome">
+				</div>
+				<div class="form-group">
+					<label for="slcsexo"></label> 
+					<input type="text" class="form-control" th:field="*{sexo}" placeholder="Sexo">
+				</div>
+				<div class="form-group">
+					<label for="slccpf"></label> 
+					<input type="text" class="form-control" th:field="*{cpf}" placeholder="CPF">
+				</div>
+				<div class="form-group">
+					<label for="slcendereco"></label> 
+					<input type="text" class="form-control" th:field="*{endereco}" placeholder="Endereco">
+				</div>
+				<div class="form-group">
+					<label for="slcmatricula"></label> 
+					<input type="text" class="form-control" th:field="*{matricula}" placeholder="Matricula">
+				</div>
+				<div class="form-group">
+					<label for="slccidade"></label> 
+					<input type="text" class="form-control" th:field="*{cidade}" placeholder="Cidade">
+				</div>
+				<div class="form-group">
+					<label for="slcestado"></label> 
+					<input type="text" class="form-control" th:field="*{estado}" placeholder="Estado">
+				</div>
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</form>
+		</div>
+	</div>
+	<div th:include="layout :: footer" id="footer">(footer)</div>
+</body>
+</html>

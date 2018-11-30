@@ -1,0 +1,5 @@
+package com.univille.sistemastatus.model;
+
+public class ItemPedido {
+
+}
